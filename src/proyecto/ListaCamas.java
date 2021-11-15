@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author cagaj
  */
-public class ListaCamas {
+public class ListaCamas implements Metodos{
 
     private int cantCamas;
     private Cama[] camas;
@@ -118,8 +118,8 @@ public class ListaCamas {
 
     }
 
-    
-    public void modificarCama() throws IOException{
+    @Override
+    public void modificarElemento() throws IOException{
         boolean estado, camaEncontrada = false;
         int posCama =0;
         String decision = null, cambio = null;
@@ -226,8 +226,8 @@ public class ListaCamas {
         return agregado;
     }
 
-    
-    public void eliminarPaciente() throws IOException {
+    @Override
+    public void eliminarElemento() throws IOException {
 
         boolean encontrado = false;
         String rutPaciente = null;
@@ -272,8 +272,8 @@ public class ListaCamas {
         pacienteConCama[posPaciente].gafete();
     }
 
-    
-    public void mostrarPacCama() {
+    @Override
+    public void mostrarElemento() {
 
         for (int i = 0; i < pacienteConCama.length; i++) {
             pacienteConCama[i].gafete();

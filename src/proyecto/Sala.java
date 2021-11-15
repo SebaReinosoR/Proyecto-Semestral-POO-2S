@@ -73,11 +73,11 @@ public class Sala {
     }
     
     public void mostrarPacientes(){
-        camasPiso.mostrarPacCama();
+        camasPiso.mostrarElemento();
     }
     
     public void eliminarPaciente() throws IOException{
-        camasPiso.eliminarPaciente();
+        camasPiso.eliminarElemento();
     }
     
     public String getDiagnostico(int posCama){
