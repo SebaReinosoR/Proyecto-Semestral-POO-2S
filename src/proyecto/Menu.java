@@ -423,10 +423,48 @@ public class Menu {
     
     public void funcionamientoFuncionarios() throws IOException {
 
-       /*
-            POR RELLENAR
-        
-        */
+        int entrada;
+        BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+
+        do {
+            System.out.println("Que desea realizar:\n"
+                    + "1.- Mostrar Funcionarios \n"
+                    + "2.- Mostrar Gafete\n"
+                    + "2.- Agregar Funcionario\n"
+                    + "3.- Modificar Funcionario\n"
+                    + "4.- Eliminar Funcionario\n"
+                    + "0.- Salir\n");
+            entrada = Integer.parseInt(lector.readLine());
+
+            switch (entrada) {
+                case 1:
+                    hospital.mostrarFuncionario();
+                    break;
+                case 2:
+                    hospital.mostrarFuncionario();
+                    break;
+                case 3:
+                    hospital.agregarFuncionario();
+                    break;
+                case 4:
+                    hospital.modificarFuncionario();
+                    break;
+                case 5:
+                    String rutFuncionario;
+                    System.out.println("Ingrese el rut del funcionario");
+                    rutFuncionario = lector.readLine();
+                    hospital.eliminarFuncionario(rutFuncionario);
+                    break;
+
+                case 0:
+                    System.out.println("saliendo....");
+                    break;
+                default:
+                    System.out.println("Ingrese una opcion valida.");
+            }
+
+        } while (entrada != 0);
+
         
     }
 }

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author cagaj
  */
-public class ListaCamas implements Metodos{
+public class ListaCamas implements Metodos {
 
     private int cantCamas;
     private Cama[] camas;
