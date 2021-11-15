@@ -20,10 +20,7 @@ public class Paciente extends Personas{
     private short mesSalida;
     private short añoSalida;
 
-    public Paciente(){
-        super();
-    }
-
+ 
     public Paciente(String nombres, String apellidos, String rut, short edad, String diagnostico, short diaIngreso, short mesIngreso, short añoIngreso) {
         super(nombres, apellidos, rut, edad);
         this.diagnostico = diagnostico;
@@ -95,7 +92,7 @@ public class Paciente extends Personas{
         return añoSalida;
     }
 
-    public void setAñoSalida(short añoSalida) {
+    public void setAñoSgetlida(short añoSalida) {
         this.añoSalida = añoSalida;
     }
     

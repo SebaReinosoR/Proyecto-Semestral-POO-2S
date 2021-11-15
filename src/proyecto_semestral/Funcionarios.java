@@ -13,10 +13,7 @@ public class Funcionarios extends Personas{
     
     private String especialidad;
 
-    public Funcionarios(String especialidad) {
-        this.especialidad = especialidad;
-    }
-
+   
     public Funcionarios(String especialidad, String nombres, String apellidos, String rut, short edad) {
         super(nombres, apellidos, rut, edad);
         this.especialidad = especialidad;

@@ -16,9 +16,6 @@ public class Personas {
     private String rut;
     private short edad;
 
-    public Personas() {
-    }
-    
     public Personas(String nombres, String apellidos, String rut, short edad) {
         this.nombres = nombres;
         this.apellidos = apellidos;
