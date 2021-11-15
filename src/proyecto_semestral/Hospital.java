@@ -7,12 +7,14 @@ package proyecto_semestral;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author cagaj
  */
-public class Hospital {
+public class Hospital implements Metodos {
 
     private String nombreHospital;
     private String direccionHospital;
@@ -20,7 +22,7 @@ public class Hospital {
     private int cantidadPisos;
     private int cantidadSalas;
     private int cantidadCamas;
-    private Funcionarios[] funcionarios; //listas
+    private Funcionario[] funcionarios; //listas
     private ArrayList<Paciente> pacientes; //lista
     private HashMap<Integer, Piso> pisos;
 
@@ -34,6 +36,9 @@ public class Hospital {
         pisos = new HashMap<>();
         llenarPisos(cantidadPisos, cantidadSalas, cantidadCamas);
         pacientes = new ArrayList<>();
+        funcionarios = new Funcionario[20];
+        rellenoFuncionarios();
+        rellenoPaciente();
     }
 
     public void llenarPisos(int cantidadPisos, int cantidadSalas, int cantidadCamas) {
@@ -46,35 +51,90 @@ public class Hospital {
     }
 
     /*
-        Manejo de los pisos
+        --------------------------------------------------------
+        Datos de los pacientes y funcionarios
      */
-    public void mostrarPisos() {
-        for (Integer i : pisos.keySet()) {
-            System.out.println("Esta en el piso " + i);
+    private void rellenoFuncionarios() {
+
+        String nombre, apellido, rut, especialidad;
+        int edad;
+
+        File f = new File("datos.CSV");
+
+        try {
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+            String line = "";
+            int i = 0;
+
+            while ((line = br.readLine()) != null) {
+
+                Funcionario nuevoFuncionario;
+                String[] splitedLine = line.split(";");
+                apellido = splitedLine[0];
+                nombre = splitedLine[1];
+                rut = splitedLine[2];
+                edad = Integer.parseInt(splitedLine[3]);
+                especialidad = splitedLine[4] + "";
+
+                nuevoFuncionario = new Funcionario(especialidad, nombre, apellido, rut, edad);
+                funcionarios[i] = nuevoFuncionario;
+                i++;
+
+            }
+            System.out.println("---------------");
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage() + " no se que paso, que no lee");
         }
+
     }
 
-    public void agregarPiso() throws IOException {
+    private void rellenoPaciente() {
 
-        int numeroPiso, cantidadSalas;
-        Piso nuevoPiso;
-        BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+        String nombre, apellido, rut, diagnostico;
+        int edad, diaIngreso, mesIngreso, anioIngreso;
 
-        System.out.println("Ingrese el numero del piso:");
-        numeroPiso = Integer.parseInt(lector.readLine());
+        File f = new File("datos_PACIENTE.txt");
 
-        System.out.println("Ingrese la cantidad de salas:");
-        cantidadSalas = Integer.parseInt(lector.toString());
+        try {
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+            String line = "";
 
-        nuevoPiso = new Piso(numeroPiso, cantidadSalas, cantidadCamas);
+            while ((line = br.readLine()) != null) {
+                Paciente nuevoPaciente;
+                String[] splitedLine = line.split(";");
+                apellido = splitedLine[0];
+                nombre = splitedLine[1];
+                rut = splitedLine[2];
+                edad = Integer.parseInt(splitedLine[3]);
+                diagnostico = splitedLine[4] + "";
+                diaIngreso = Integer.parseInt(splitedLine[5]);
+                mesIngreso = Integer.parseInt(splitedLine[6]);
+                anioIngreso = Integer.parseInt(splitedLine[7]);
 
-        if (!pisos.containsValue(nuevoPiso)) {
-            pisos.put(numeroPiso, nuevoPiso);
-            System.out.println("pisos agregado con exito");
-        } else {
-            System.out.println("El piso ya se encuentra");
+                nuevoPaciente = new Paciente(nombre, apellido, rut, edad, diagnostico, diaIngreso, mesIngreso, anioIngreso);
+                pacientes.add(nuevoPaciente);
+
+            }
+            System.out.println("---------------");
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage() + " no se que paso, que no lee");
         }
 
+    }
+
+    /*
+        Fin del espacio
+        -------------------------------------------------------------
+     */
+ /*
+        Manejo de los pisos
+     */
+    public void mostrarPisos(int posPiso) {
+        System.out.println("Usted esta en el piso " + posPiso);
     }
 
     public void buscarPiso() throws IOException {
@@ -93,13 +153,41 @@ public class Hospital {
 
     }
 
-    public void modificarPiso() throws IOException {
+    @Override
+    public void mostrarElemento() {
+        for (Integer i : pisos.keySet()) {
+            System.out.println("Esta en el piso " + i);
+        }
+    }
 
+    @Override
+    public void agregarElemento() throws IOException {
+        int numeroPiso;
+        Piso nuevoPiso;
+        BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Ingrese el numero del piso:");
+
+        numeroPiso = Integer.parseInt(lector.readLine());
+
+        nuevoPiso = new Piso(numeroPiso, cantidadSalas, cantidadCamas);
+
+        if (!(pisos.containsKey(numeroPiso))) {
+            pisos.put(numeroPiso, nuevoPiso);
+            System.out.println("pisos agregado con exito");
+        } else {
+            System.out.println("El piso ya se encuentra");
+        }
+    }
+
+    @Override
+    public void modificarElemento() throws IOException {
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
         int keyPisoModificar = 0;
 
         System.out.println("Ingrese el numero del piso a Modificar:");
         keyPisoModificar = Integer.parseInt(lector.readLine());
+
         String decision = null;
         if (pisos.containsKey(keyPisoModificar)) {
 
@@ -109,7 +197,9 @@ public class Hospital {
             if (decision.equals("si")) {
                 int salas = 0;
                 System.out.println("Ingrese el nuevo numero de salas:");
+
                 salas = Integer.parseInt(lector.readLine());
+
                 pisos.get(keyPisoModificar).setCantidadSalas(salas);
                 System.out.println("Cambio exitoso.");
             } else {
@@ -121,8 +211,8 @@ public class Hospital {
         }
     }
 
-    public void eliminarPiso() {
-
+    @Override
+    public void eliminarElemento() throws IOException {
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
         int keyPisoEliminar = 0;
 
@@ -132,7 +222,6 @@ public class Hospital {
         } else {
             System.out.println("El piso solicitado no se encuentra/no existe");
         }
-
     }
 
     public int sizePisos() {
@@ -143,19 +232,19 @@ public class Hospital {
         Solicitudes de la salas
      */
     public void mostrarSala(int numeroPiso) {
-        pisos.get(numeroPiso).mostrarSalas();
+        pisos.get(numeroPiso).mostrarElemento();
     }
 
     public void agregarSala(int numeroPiso) throws IOException {
-        pisos.get(numeroPiso).ingresarSala();
+        pisos.get(numeroPiso).agregarElemento();
     }
 
     public void modificarSala(int numeroPiso) throws IOException {
-        pisos.get(numeroPiso).modificarSalas();
+        pisos.get(numeroPiso).modificarElemento();
     }
 
     public void eliminarSala(int numeroPiso) throws IOException {
-        pisos.get(numeroPiso).eliminarSala();
+        pisos.get(numeroPiso).eliminarElemento();
     }
 
     public int tamanioSala(int numeroPiso) {
@@ -310,8 +399,24 @@ public class Hospital {
 
     }
 
+    public String diagnosticoPaciente(int posPiso, int posSala, int posCama) {
+        return pisos.get(posPiso).getDiagnostico(posSala, posCama);
+    }
+
+    public Paciente pacienteSolicitado(int posPiso, int posSala, int posCama) {
+        return pisos.get(posPiso).getPaciente(posSala, posCama);
+    }
+
+    public void mostrarGafete(int posPiso, int posSala, int posCama) {
+        pisos.get(posPiso).mostrarGafete(posSala, posCama);
+    }
+
+    public String entregarRutPaciente(int pos, int posSala, int posPiso) {
+        return pisos.get(posPiso).rutPaciente(pos, posSala);
+    }
+
     /*
-        Funciones de los Funcionarios
+        Funciones de los Funcionario
      */
     public void mostrarFuncionario() {
 
@@ -327,7 +432,7 @@ public class Hospital {
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
         String nombres, apellidos, rut, especialidad;
         short edad, i;
-        Funcionarios nuevoFuncionario;
+        Funcionario nuevoFuncionario;
 
         System.out.println("Ingrese nombres del funcionario");
         nombres = lector.readLine();
@@ -340,7 +445,7 @@ public class Hospital {
         System.out.println("Ingrese edad del funcionario");
         edad = Short.parseShort(lector.readLine());
 
-        nuevoFuncionario = new Funcionarios(especialidad, nombres, apellidos, rut, edad); //crea el objeto
+        nuevoFuncionario = new Funcionario(especialidad, nombres, apellidos, rut, edad); //crea el objeto
 
         for (int j = 0; j < funcionarios.length && funcionarios[j] != null; j++) {
             if (funcionarios[j] == nuevoFuncionario) {
@@ -355,7 +460,8 @@ public class Hospital {
 
     }
 
-    public void modificarFuncionario() throws IOException { // EL UNICO PROBLEMA ES QUE SI QUIERE EDITAR EL RUT ES IMPOSIBLE XD
+    public void modificarFuncionario() throws IOException { // EL UNICO PROBLEMA ES QUE SI QUIERE EDITAR EL RUT ES IMPOSIBLE
+
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
         String rut, cambio;
         int condicional, repet;
@@ -447,19 +553,26 @@ public class Hospital {
     }
 
     public void eliminarFuncionario() throws IOException {
-        
+
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
         String rut;
         System.out.println("Ingrese Rut del funcionario");
         rut = lector.readLine();
-        
+
         for (int j = 0; j < funcionarios.length && funcionarios[j] != null; j++) {
             if (funcionarios[j].getRut().equals(rut)) {
                 funcionarios[j] = null;
                 System.out.println("El funcionario fue eliminado con exito");
             }
         }
-   
+
+    }
+
+    public void mostrarGafete() {
+        for (int i = 0; i < funcionarios.length; i++) {
+            funcionarios[i].gafete();
+            System.out.println("--------------------------------");
+        }
     }
 
     /*
@@ -467,6 +580,7 @@ public class Hospital {
         (y una funcion Override que es la de toString)
     
      */
+    
     public String getNombreHospital() {
         return nombreHospital;
     }

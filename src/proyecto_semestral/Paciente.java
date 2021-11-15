@@ -13,15 +13,15 @@ public class Paciente extends Persona{
     
     
     private String diagnostico;
-    private short diaIngreso;
-    private short mesIngreso;
-    private short anioIngreso;
-    private short diaSalida;
-    private short mesSalida;
-    private short anioSalida;
+    private int diaIngreso;
+    private int mesIngreso;
+    private int anioIngreso;
+    private int diaSalida;
+    private int mesSalida;
+    private int anioSalida;
 
 
-    public Paciente(String nombres, String apellidos, String rut, short edad, String diagnostico, short diaIngreso, short mesIngreso, short añoIngreso) {
+    public Paciente(String nombres, String apellidos, String rut, int edad, String diagnostico, int diaIngreso, int mesIngreso, int añoIngreso) {
         super(nombres, apellidos, rut, edad);
         this.diagnostico = diagnostico;
         this.diaIngreso = diaIngreso;
@@ -29,15 +29,9 @@ public class Paciente extends Persona{
         this.anioIngreso = añoIngreso;
     }
     
-    public Paciente(String nombres, String apellidos, String rut, short edad, String diagnostico, short diaIngreso, short mesIngreso, short añoIngreso, short diaSalida, short mesSalida, short añoSalida) {
+    public Paciente(String nombres, String apellidos, String rut, short edad, String diagnostico) {
         super(nombres, apellidos, rut, edad);
         this.diagnostico = diagnostico;
-        this.diaIngreso = diaIngreso;
-        this.mesIngreso = mesIngreso;
-        this.anioIngreso = añoIngreso;
-        this.diaSalida = diaSalida;
-        this.mesSalida = mesSalida;
-        this.anioSalida = añoSalida;
     }
 
     public String getDiagnostico() {
@@ -52,7 +46,7 @@ public class Paciente extends Persona{
         return diaIngreso+" "+mesIngreso+" "+anioIngreso;
     }
 
-    public void setFechaIngreso(short diaIngreso,short mesIngreso,short anioIngreso) {
+    public void setFechaIngreso(int diaIngreso,int mesIngreso,int anioIngreso) {
         this.diaIngreso = diaIngreso;
         this.mesIngreso = mesIngreso;
         this.anioIngreso = anioIngreso;
@@ -62,10 +56,19 @@ public class Paciente extends Persona{
         return diaSalida+" "+mesSalida+" "+anioSalida+" ";
     }
 
-    public void setFechaSalida(short diaSalida,short mesSalida,short anioSalida){
+    public void setFechaSalida(int diaSalida,int mesSalida,int anioSalida){
         this.diaSalida = diaSalida;
         this.mesSalida = mesSalida;
         this.anioSalida = anioSalida;
+    }
+
+    @Override
+    public void gafete() {
+     System.out.println("Nombre = "+super.getNombres()+" "+super.getApellidos());
+        System.out.println("Edad = "+super.getEdad());
+        System.out.println("Rut = "+super.getRut());
+        System.out.println("Fecha de ingreso = "+this.fechaIngreso());
+        System.out.println("Diagnostico = "+this.diagnostico);
     }
     
 }

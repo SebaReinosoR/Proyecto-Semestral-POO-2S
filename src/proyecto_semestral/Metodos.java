@@ -11,16 +11,14 @@ import java.io.IOException;
  *
  * @author cagaj
  */
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws IOException {
-        // TODO code application logic here
-        Menu menu = new Menu();
-        menu.panel();
-         
-    }
-
+public interface Metodos {
+    
+    public void mostrarElemento();
+    
+    public void agregarElemento()throws IOException;
+    
+    public void modificarElemento()throws IOException;
+    
+    public void eliminarElemento()throws IOException;
+    
 }

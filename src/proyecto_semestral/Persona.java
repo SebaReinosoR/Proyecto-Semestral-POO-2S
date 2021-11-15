@@ -9,21 +9,23 @@ package proyecto_semestral;
  *
  * @author cagaj
  */
-public class Persona {
+public abstract class Persona {
     
     private String nombres;
     private String apellidos;
     private String rut;
-    private short edad;
+    private int edad;
 
     
-    public Persona(String nombres, String apellidos, String rut, short edad) {
+    public Persona(String nombres, String apellidos, String rut, int edad) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.rut = rut;
         this.edad = edad;
     }
 
+    public abstract void gafete();
+    
     public String getNombres() {
         return nombres;
     }
@@ -48,11 +50,11 @@ public class Persona {
         this.rut = rut;
     }
 
-    public short getEdad() {
+    public int getEdad() {
         return edad;
     }
 
-    public void setEdad(short edad) {
+    public void setEdad(int edad) {
         this.edad = edad;
     }
     

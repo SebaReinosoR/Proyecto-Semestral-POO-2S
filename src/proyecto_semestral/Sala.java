@@ -8,12 +8,14 @@ package proyecto_semestral;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author cagaj
  */
-public class Sala {
+public class Sala{
     
     private int numeroSala;
     private int cantCamas;
@@ -51,6 +53,11 @@ public class Sala {
         }
     }
     
+    /*
+        Funciones de las camas y pacientes
+     */ 
+     
+     
     public void mostrarCama(int posCama){
         System.out.println("En la cama "+camas[posCama]+" esta ");
         if (!camas[posCama].isDisponibilidad()) {
@@ -100,13 +107,14 @@ public class Sala {
     }
     
     public void modificarCama() throws IOException{
-        boolean estado,camaEncontrada = false;
-        int posCama;
+         boolean estado,camaEncontrada = false;
+        int posCama = 0;
         String decision = null,cambio = null;
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in)); 
         
         System.out.println("Ingrese el numero de la cama:");
         posCama = Integer.parseInt(lector.readLine());
+        
         
         for (int i = 0; i < camas.length; i++) {
             if (camas[i].getNumeroCama() == posCama) {
@@ -116,8 +124,8 @@ public class Sala {
         
         if (camaEncontrada) {
             System.out.println("¿Desea cambiar el estado de la cama?: (si/no)");
-            decision = lector.readLine();
-            
+                decision = lector.readLine();
+           
             if(decision.equals("si")) {
                 
                 System.out.println("La cama"+camas[posCama]+" se encuentra ");
@@ -127,7 +135,7 @@ public class Sala {
                     System.out.println("ocupada por "+pacientesConCama[posCama].getNombres());
                 }
                 System.out.println("ingrese su disponibilidad: (ocupada/desocupada)");
-                cambio = lector.readLine();
+                    cambio = lector.readLine();
                 if (cambio.equals("ocupada")) {
                     estado = false;
                     camas[posCama].setDisponibilidad(estado);
@@ -150,13 +158,13 @@ public class Sala {
     }
     
     public void eliminarCama() throws IOException{
-        
         boolean encontrado = false;
-        int posCama;
+        int posCama = 0;
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in)); 
         
         System.out.println("Ingrese el numero de la cama:");
-        posCama = Integer.parseInt(lector.readLine());
+            posCama = Integer.parseInt(lector.readLine());
+        
         
         for (int i = 0; i < camas.length; i++) {
             if (camas[i].getNumeroCama() == posCama) {
@@ -176,7 +184,7 @@ public class Sala {
         }else{
             System.out.println("La cama no ha podido ser encontrada");
         }
-        
+       
     }
       
     public void eliminarPaciente() throws IOException{
@@ -207,6 +215,21 @@ public class Sala {
         
     }
 
+    public String diagnosticoPaciente(int posCama){
+        return pacientesConCama[posCama].getDiagnostico();
+    }
+    
+    public Paciente retornoPaciente(int posicion){
+        return pacientesConCama[posicion];
+    }
+    
+    public void mostrarGafete(int pos){
+        pacientesConCama[pos].gafete();
+    }
+    
+    public String rutPaciente(int pos){
+        return pacientesConCama[pos].getRut();
+    }
     
     /*
         getters and setters de Sala
@@ -227,6 +250,7 @@ public class Sala {
     public void setCantCamas(int cantCamas) {
         this.cantCamas = cantCamas;
     }
+
     
     
     

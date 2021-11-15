@@ -35,9 +35,5 @@ public class Cama {
         this.disponibilidad = disponibilidad;
     }
     
-    public void consolaCamasPacientes(){
-        
-    }
-    
     
 }

@@ -6,6 +6,7 @@
 package proyecto_semestral;
 
 import java.io.*;
+import java.util.*;
 
 /**
  *
@@ -36,7 +37,8 @@ public class Menu {
             System.out.println("1.- Pisos\n"
                     + "2.- Salas\n"
                     + "3.- Camas\n"
-                    + "4.- Pacientes(?)\n"
+                    + "4.- Pacientes\n"
+                    + "5.- Funcionarios\n"
                     + "0.- Salir\n");
 
             entrada = Integer.parseInt(lector.readLine());
@@ -53,6 +55,9 @@ public class Menu {
                 case 4:
                     funcionamientoPacientes();
                     break;
+                case 5:
+                    funcionamientoFuncionario();
+                    break;
                 case 0:
                     System.out.println("Saliendo...");
                     break;
@@ -65,6 +70,7 @@ public class Menu {
     }
 
     public int posicionPiso() throws IOException {
+
         int entrada, numeroPiso = 1;
         boolean flag = false;
 
@@ -85,7 +91,13 @@ public class Menu {
                 do {
                     System.out.println("Seleccione en que piso esta posicionado"); //necesito re-formular la pregunta
                     for (int i = 0; i < hospital.sizePisos(); i++) {
-                        System.out.print((i + 1) + " - ");
+                        if (i < hospital.sizePisos() - 1) {
+                            System.out.print((i + 1) + " - ");
+                        } else {
+                            if (i == hospital.sizePisos() - 1) {
+                                System.out.println(i + 1);
+                            }
+                        }
                     }
                     if (Integer.parseInt(lector.readLine()) < hospital.sizePisos()) {
                         numeroPiso = Integer.parseInt(lector.readLine());
@@ -144,25 +156,29 @@ public class Menu {
 
         do {
             System.out.println("Que desea realizar:\n"
-                    + "1.- Mostrar Pisos\n"
-                    + "2.- Agregar Piso\n"
-                    + "3.- Modificar Piso\n"
-                    + "4.- Eliminar Piso\n"
+                    + "1.- Mostrar pisos\n"
+                    + "2.- Mostrar todos los pisos\n"
+                    + "3.- Agregar piso\n"
+                    + "4.- Modificar piso\n"
+                    + "5.- Eliminar piso\n"
                     + "0.- Salir\n");
             entrada = Integer.parseInt(lector.readLine());
 
             switch (entrada) {
                 case 1:
-                    hospital.mostrarPisos();
+                    hospital.mostrarPisos(posPiso);
                     break;
                 case 2:
-                    hospital.agregarPiso();
+                    hospital.mostrarElemento();
                     break;
                 case 3:
-                    hospital.modificarPiso();
+                    hospital.agregarElemento();
                     break;
                 case 4:
-                    hospital.eliminarPiso();
+                    hospital.modificarElemento();
+                    break;
+                case 5:
+                    hospital.eliminarElemento();
                     break;
                 case 0:
                     System.out.println("saliendo....");
@@ -294,9 +310,12 @@ public class Menu {
         do {
             System.out.println("Que desea realizar:\n"
                     + "1.- Mostrar Todos los pacientes\n"
-                    + "2.- Agregar paciente\n"
-                    + "3.- Modificar paciente\n"
-                    + "4.- Eliminar paciente\n"
+                    + "2.- Ficha del Paciente\n"
+                    + "3.- Agregar paciente\n"
+                    + "4.- Modificar paciente\n"
+                    + "5.- Eliminar paciente\n"
+                    + "6.- Filtrar pacientes por Diagnostico"
+                    + "7.- Urgencias del hospital"
                     + "0.- Salir\n");
             entrada = Integer.parseInt(lector.readLine());
 
@@ -305,13 +324,22 @@ public class Menu {
                     hospital.mostrarTotalPaciente();
                     break;
                 case 2:
-                    hospital.agregarPaciente();
+                    pantallaGafete();
                     break;
                 case 3:
-                    hospital.modificarPaciente();
+                    hospital.agregarPaciente();
                     break;
                 case 4:
+                    hospital.modificarPaciente();
+                    break;
+                case 5:
                     hospital.eliminarPaciente();
+                    break;
+                case 6:
+                    filtrarGravedad();
+                    break;
+                case 7:
+                    urgencia();
                     break;
                 case 0:
                     System.out.println("saliendo....");
@@ -324,6 +352,34 @@ public class Menu {
 
     }
 
+    public int pantallaGafete() throws IOException {
+    
+        int posCama = 0;    
+        int valorPiso = 0, valorSala, valorCama;
+        String rut;
+        BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.println("Ingrese el rut del paciente = (formato 12.345.789-8)");
+        rut = lector.readLine();
+        
+        while(valorPiso != hospital.sizePisos()){
+            valorSala = 0;
+            while(valorSala != hospital.tamanioSala(valorPiso)){
+                valorCama = 0;
+                while(valorCama != hospital.mostrarCamasSala(valorPiso, valorSala)){
+                    if(rut.equals(hospital.entregarRutPaciente(posCama, posSala, posPiso))){
+                        hospital.mostrarGafete(posPiso, posSala, posCama);
+                    }
+                   valorCama++;         
+                }
+                valorSala++;
+            }
+            valorPiso++;
+        }
+        
+        return posCama;
+    }
+
     public void funcionamientoFuncionario() throws IOException {
 
         int entrada;
@@ -332,6 +388,7 @@ public class Menu {
         do {
             System.out.println("Que desea realizar:\n"
                     + "1.- Mostrar Funcionarios \n"
+                    + "2.- Mostrar Gafete\n"
                     + "2.- Agregar Funcionario\n"
                     + "3.- Modificar Funcionario\n"
                     + "4.- Eliminar Funcionario\n"
@@ -343,12 +400,15 @@ public class Menu {
                     hospital.mostrarFuncionario();
                     break;
                 case 2:
-                    hospital.agregarFuncionario();
+                    hospital.mostrarGafete();
                     break;
                 case 3:
-                    hospital.modificarFuncionario();
+                    hospital.agregarFuncionario();
                     break;
                 case 4:
+                    hospital.modificarFuncionario();
+                    break;
+                case 5:
                     hospital.eliminarFuncionario();
                     break;
 
@@ -361,6 +421,95 @@ public class Menu {
 
         } while (entrada != 0);
 
+    }
+
+    public void filtrarGravedad() throws IOException {
+        int filtro;
+        BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Por favor ingrese el estado de gravedad a filtrar:");
+        filtro = Integer.parseInt(lector.readLine());
+        filtro(filtro);
+
+    }
+
+    public void filtro(int gravedad) {
+
+        int valorPiso = 0, valorSala, valorCama;
+        ArrayList<Paciente> pacientesFiltro = new ArrayList<>();
+        int diagnosticoPac;
+        while (valorPiso != hospital.sizePisos()) {
+            valorSala = 0;
+            while (valorSala != hospital.tamanioSala(valorPiso)) {
+                valorCama = 0;
+                while (valorCama != hospital.mostrarCamasSala(valorPiso, valorSala)) {
+                    diagnosticoPac = Integer.parseInt(hospital.diagnosticoPaciente(valorPiso, valorSala, valorCama));
+                    if (diagnosticoPac == gravedad) {
+                        pacientesFiltro.add(hospital.pacienteSolicitado(valorPiso, valorSala, valorCama));
+                    }
+                    valorCama++;
+                }
+                valorSala++;
+            }
+            valorPiso++;
+        }
+
+        System.out.println("Lista de las gravedades de : " + gravedad);
+        System.out.println(pacientesFiltro.toString());
+
+    }
+
+    public void urgencia() {
+        int valorPiso = 0, valorSala, valorCama, diagnostico;
+
+        while (valorPiso != hospital.sizePisos()) {
+            System.out.println("La lista del piso " + (valorPiso + 1) + " de urgencias");
+            valorSala = 0;
+            while (valorSala != hospital.tamanioSala(valorPiso)) {
+                valorCama = 0;
+                System.out.println("En la sala " + valorSala + " estan con urgencias los pacientes:");
+                if (existe(5, valorPiso, valorSala)) {
+                    while (valorCama != hospital.mostrarCamasSala(valorPiso, valorSala)) {
+                        diagnostico = Integer.parseInt(hospital.diagnosticoPaciente(valorPiso, valorSala, valorCama));
+                        if (diagnostico == 5) {
+                            Paciente pacienteGuardado = hospital.pacienteSolicitado(valorPiso, valorSala, valorCama);
+                            System.out.println(pacienteGuardado.toString());
+                        }
+                        valorCama++;
+                    }
+                } else {
+                    if (existe(4, valorPiso, valorSala)) {
+                        while (valorCama != hospital.mostrarCamasSala(valorPiso, valorSala)) {
+                            diagnostico = Integer.parseInt(hospital.diagnosticoPaciente(valorPiso, valorSala, valorCama));
+                            if (diagnostico == 4) {
+                                Paciente pacienteGuardado = hospital.pacienteSolicitado(valorPiso, valorSala, valorCama);
+                                System.out.println(pacienteGuardado.toString());
+                            }
+                            valorCama++;
+                        }
+                    }
+                }
+
+                valorSala++;
+            }
+            valorPiso++;
+        }
+
+    }
+
+    public boolean existe(int gravedad, int posPiso, int posSala) {
+        boolean flag = false;
+        int diagnostico, posCama = 0;
+
+        while (posCama != hospital.mostrarCamasSala(posPiso, posSala)) {
+            diagnostico = Integer.parseInt(hospital.diagnosticoPaciente(posPiso, posSala, posCama));
+            if (diagnostico == gravedad) {
+                flag = true;
+            }
+            posCama++;
+        }
+
+        return flag;
     }
 
 }
