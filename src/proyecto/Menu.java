@@ -293,23 +293,21 @@ public class Menu {
     }
 
     public void funcionamientoPacientes() throws IOException {
-       /*
-            Dividir esto en 2 secciones 
-            que son los pacientes con camas, y los pacientes en cola
-        */
+       
          int entrada;
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 
         do {
             System.out.println("Que desea realizar:\n"
                     + "1.- Mostrar en las camas\n"
-                    + "2.- Mostrar Pacientes en cola"
-                    + "2.- Ficha del Paciente\n"
-                    + "3.- Agregar paciente\n"
-                    + "4.- Modificar paciente\n"
-                    + "5.- Eliminar paciente\n"
-                    + "6.- Filtrar pacientes por Diagnostico\n"
-                    + "7.- Urgencias del hospital\n"
+                    + "2.- Mostrar todos los pacientes en las camas\n"
+                    + "3.- Mostrar Pacientes en cola\n"
+                    + "4.- Ficha del Paciente\n"
+                    + "5.- Agregar paciente\n"
+                    + "6.- Modificar paciente\n"
+                    + "7.- Eliminar paciente\n"
+                    + "8.- Filtrar pacientes por Diagnostico\n"
+                    + "9.- Urgencias del hospital\n"
                     + "0.- Salir\n");
             entrada = Integer.parseInt(lector.readLine());
 
@@ -318,23 +316,27 @@ public class Menu {
                     hospital.mostrarPacientesConCamasSala(posPiso, posSala);
                     break;
                 case 2:
+                    hospital.mostrarPacientesConCamasSala();
                     break;
                 case 3:
-                    pantallaGafete();
+                    hospital.mostrarListaPacientes();
                     break;
                 case 4:
-                    hospital.agregarPaciente();
+                    pantallaGafete();
                     break;
                 case 5:
-                    hospital.modificarPaciente();
+                    hospital.agregarPaciente();
                     break;
                 case 6:
-                    hospital.eliminarPaciente();
+                    hospital.modificarPaciente();
                     break;
                 case 7:
-                    this.filtrarGravedad();
+                    hospital.eliminarPaciente();
                     break;
                 case 8:
+                    this.filtrarGravedad();
+                    break;
+                case 9:
                     this.urgencia();
                     break;
                 case 0:
@@ -418,15 +420,12 @@ public class Menu {
              System.out.println("-------------------------------");
          }
     }
+    
+    public void funcionamientoFuncionarios() throws IOException {
 
-    
-    
-    
-    public void funcionamientoFuncionarios() {
-
-        /*
-            Si no fuera por que las personas necesitan 
-            una wea pa guiarse, no existiria esta mierda
+       /*
+            POR RELLENAR
+        
         */
         
     }

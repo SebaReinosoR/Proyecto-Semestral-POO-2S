@@ -53,7 +53,7 @@ public class Sala {
     }
     
     public void modificarCamas() throws IOException{
-        camasPiso.modificarCama();
+        camasPiso.modificarElemento();
     }
     
     public Paciente eliminarCama() throws IOException{
@@ -73,7 +73,7 @@ public class Sala {
     }
     
     public void mostrarPacientes(){
-        camasPiso.listarPacientes();
+        camasPiso.mostrarPacCama();
     }
     
     public void eliminarPaciente() throws IOException{

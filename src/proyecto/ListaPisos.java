@@ -32,7 +32,7 @@ public class ListaPisos {
 
     }
 
-    public void mostrarPisoPorPos(int posPiso) {
+    public void mostrarPisos(int posPiso) {
         System.out.println("Usted esta en el piso " + posPiso);
         for (int i = 0; i < pisos.get(posPiso).tamanioSala(); i++) {
             pisos.get(posPiso).mostrarSalaPorPos(i);
@@ -43,7 +43,7 @@ public class ListaPisos {
 
     public void mostrarPisos() {
         for (int i = 1; i <= pisos.size(); i++) {
-            this.mostrarPisoPorPos(i);
+            this.mostrarPisos(i);
             System.out.println("------------------------");
         }
     }

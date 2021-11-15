@@ -6,6 +6,8 @@
 package proyecto;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,14 +37,14 @@ public class ListaCamas {
         return camas[posicion];
     }
 
-    public void setDisponibilidad(boolean disponible,int posCama){
+    public void setDisponibilidad(boolean disponible, int posCama) {
         this.camas[posCama].setDisponibilidad(disponible);
     }
-    
-    public boolean isDisponible(int posCama){
+
+    public boolean isDisponible(int posCama) {
         return this.camas[posCama].isDisponibilidad();
     }
-    
+
     public void setCamas(Cama camaP, int posicion) {
         this.camas[posicion] = camaP;
     }
@@ -116,14 +118,16 @@ public class ListaCamas {
 
     }
 
-    public void modificarCama() throws IOException {
+    
+    public void modificarCama() throws IOException{
         boolean estado, camaEncontrada = false;
-        int posCama;
+        int posCama =0;
         String decision = null, cambio = null;
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Ingrese el numero de la cama:");
-        posCama = Integer.parseInt(lector.readLine());
+            posCama = Integer.parseInt(lector.readLine());
+        
 
         for (int i = 0; i < camas.length; i++) {
             if (camas[i].getNumeroCama() == posCama) {
@@ -133,7 +137,9 @@ public class ListaCamas {
 
         if (camaEncontrada) {
             System.out.println("¿Desea cambiar el estado de la cama?: (si/no)");
-            decision = lector.readLine();
+            
+                decision = lector.readLine();
+            
 
             if (decision.equals("si")) {
 
@@ -144,7 +150,8 @@ public class ListaCamas {
                     System.out.println("ocupada por " + pacienteConCama[posCama].getNombres());
                 }
                 System.out.println("ingrese su disponibilidad: (ocupada/desocupada)");
-                cambio = lector.readLine();
+                    cambio = lector.readLine();
+                
                 if (cambio.equals("ocupada")) {
                     estado = false;
                     camas[posCama].setDisponibilidad(estado);
@@ -162,7 +169,8 @@ public class ListaCamas {
         } else {
             System.out.println("La cama solicitada no se encuentra disponible");
         }
-
+        
+        
     }
 
     public Paciente eliminarCama() throws IOException {
@@ -198,13 +206,12 @@ public class ListaCamas {
         return pacienteSinCama;
 
     }
-    
+
 
     /*
         Pacientes
-    */
-    
-    public boolean agregarPaciente(Paciente nuevoPaciente){
+     */
+    public boolean agregarPaciente(Paciente nuevoPaciente) {
         boolean agregado = false;
         int posAgreado = 0;
         for (int i = 0; i < pacienteConCama.length; i++) {
@@ -215,15 +222,10 @@ public class ListaCamas {
                 camas[i].setDisponibilidad(true);
             }
         }
-        
+
         return agregado;
-    } 
-    
-    public void listarPacientes(){
-        for (int i = 0; i < pacienteConCama.length; i++) {
-            pacienteConCama[i].gafete();
-        }
     }
+
     
     public void eliminarPaciente() throws IOException {
 
@@ -232,8 +234,9 @@ public class ListaCamas {
         int posPaciente = -1;
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Ingrese rut del paciente:");
-        rutPaciente = lector.readLine();
+        System.out.println("Ingrese rut del paciente:"); 
+            rutPaciente = lector.readLine();
+        
 
         for (int i = 0; i < pacienteConCama.length; i++) {
             if (pacienteConCama[i].getRut().equals(rutPaciente)) {
@@ -252,8 +255,8 @@ public class ListaCamas {
         }
 
     }
-    
-    public String rutPaciente(int posPaciente){
+
+    public String rutPaciente(int posPaciente) {
         return pacienteConCama[posPaciente].getRut();
     }
 
@@ -264,9 +267,19 @@ public class ListaCamas {
     public Paciente retornoPaciente(int posicion) {
         return pacienteConCama[posicion];
     }
-    
-    public void mostrarGafete(int posPaciente){
+
+    public void mostrarGafete(int posPaciente) {
         pacienteConCama[posPaciente].gafete();
     }
+
+    
+    public void mostrarPacCama() {
+
+        for (int i = 0; i < pacienteConCama.length; i++) {
+            pacienteConCama[i].gafete();
+        }
+    }
+
+    
 
 }

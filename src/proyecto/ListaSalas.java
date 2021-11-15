@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author cagaj
  */
-public class ListaSalas {
+public class ListaSalas{
 
     private int numSalas;
     private HashMap<Integer, Sala> salas;
@@ -124,10 +124,7 @@ public class ListaSalas {
 
     }
 
-    public void setSalas(HashMap<Integer, Sala> salas) {
-        this.salas = salas;
-    }
-    
+   
     
     /*
         Funciones de camas
@@ -216,8 +213,6 @@ public class ListaSalas {
     public void setNumCama(int numCama) {
         this.numCama = numCama;
     }
-
-    
 
     
 }

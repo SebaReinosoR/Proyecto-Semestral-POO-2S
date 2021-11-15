@@ -5,6 +5,8 @@
  */
 package proyecto;
 
+import java.io.IOException;
+
 /**
  *
  * @author cagaj
@@ -13,9 +15,9 @@ public interface Metodos {
     
     public void mostrarElemento();
     
-    public void modificarElemento();
+    public void modificarElemento() throws IOException;
     
-    public void EliminarElemento();
+    public void eliminarElemento() throws IOException;
     
     
 }

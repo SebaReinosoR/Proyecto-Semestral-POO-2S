@@ -7,12 +7,14 @@ package proyecto;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author cagaj
  */
-public class ListaPacientes {
+public class ListaPacientes implements Metodos {
 
     private ArrayList<Paciente> pacientes;
 
@@ -57,7 +59,8 @@ public class ListaPacientes {
 
     }
 
-    public void mostrarTotalPaciente() {
+    
+    public void mostrarCola() {
         System.out.println("En espera hay " + pacientes.size() + " pacientes");
     }
 
@@ -89,15 +92,16 @@ public class ListaPacientes {
 
     }
 
-    public void modificarPaciente() throws IOException {
-
-        String rutPaciente;
+    @Override
+    public void modificarElemento() throws IOException {
+        String rutPaciente = null;
         int posPaciente = 0, indicacion = 0;
         BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
         boolean flag = false;
 
         System.out.println("Ingrese el rut del paciente");
         rutPaciente = lector.readLine();
+
         for (int i = 0; i < pacientes.size(); i++) {
             if (pacientes.get(i).getRut().equals(rutPaciente)) {
                 posPaciente = i;
@@ -113,25 +117,49 @@ public class ListaPacientes {
                         + "3.- Edad\n"
                         + "4.- Diagnostico\n"
                         + "0.- Salir\n");
-                indicacion = Integer.parseInt(lector.readLine());
+                try {
+                    indicacion = Integer.parseInt(lector.readLine());
+                } catch (IOException ex) {
+                    Logger.getLogger(ListaPacientes.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 switch (indicacion) {
                     case 1:
                         System.out.println("Ingrese el nombre:");
-                        pacientes.get(posPaciente).setNombres(lector.readLine());
+                         {
+
+                            pacientes.get(posPaciente).setNombres(lector.readLine());
+
+                        }
                         break;
+
                     case 2:
                         System.out.println("Ingrese el apellido:");
-                        pacientes.get(posPaciente).setApellidos(lector.readLine());
+                         {
+
+                            pacientes.get(posPaciente).setApellidos(lector.readLine());
+
+                        }
                         break;
+
                     case 3:
                         System.out.println("Ingrese la edad:");
-                        pacientes.get(posPaciente).setEdad(Short.parseShort(lector.readLine()));
+                         {
+
+                            pacientes.get(posPaciente).setEdad(Short.parseShort(lector.readLine()));
+
+                        }
                         break;
+
                     case 4:
                         System.out.println("Ingree el diagnostico:");
-                        pacientes.get(posPaciente).setDiagnostico(lector.readLine());
+                         {
+
+                            pacientes.get(posPaciente).setDiagnostico(lector.readLine());
+
+                        }
                         break;
+
                     default:
                         System.out.println("Ingrese una opcion valida");
                 }
@@ -139,10 +167,10 @@ public class ListaPacientes {
         } else {
             System.out.println("No hay paciente con ese rut");
         }
-
     }
 
-    public void eliminarPaciente() throws IOException {
+    @Override
+    public void eliminarElemento() throws IOException {
         int posPaciente = 0;
         Boolean flag = false;
         String rutPaciente;
@@ -163,34 +191,33 @@ public class ListaPacientes {
         } else {
             System.out.println("No hay un rut coincidente");
         }
-
     }
-    
-    public void agregarPaciente(Paciente nuevoPaciente){
+
+    public void agregarPaciente(Paciente nuevoPaciente) {
         pacientes.add(nuevoPaciente);
     }
     
-    public void mostrarGafete(){
+    @Override
+    public void mostrarElemento() {
         for (int i = 0; i < pacientes.size(); i++) {
             pacientes.get(i).gafete();
         }
     }
-    
-    public int sizeListaPacientes(){
+
+    public int sizeListaPacientes() {
         return pacientes.size();
     }
-    
-    public String diagnosticoPaciente(int posPaciente){
+
+    public String diagnosticoPaciente(int posPaciente) {
         return pacientes.get(posPaciente).getDiagnostico();
     }
-    
-    public Paciente getPaciente(int posPaciente){
+
+    public Paciente getPaciente(int posPaciente) {
         return pacientes.get(posPaciente);
     }
-    
-    public void mostrarGafete(int pos){
+
+    public void mostrarGafete(int pos) {
         pacientes.get(pos).gafete();
     }
-    
 
 }
